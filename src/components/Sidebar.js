@@ -8,7 +8,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../firebase';
 
 function Sidebar() {
-    const [channels, loading, error] = useCollection(db.collection('rooms'));
+    const [channels] = useCollection(db.collection('rooms'));
 
     return (
         <SidebarContainer>

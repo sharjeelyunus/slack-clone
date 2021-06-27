@@ -6,28 +6,99 @@ import SearchIcon from '@material-ui/icons/Search';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+const useStyles = makeStyles((theme) => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
 
 function Header() {
     const [user] = useAuthState(auth);
 
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
-        <HeaderContainer>
-            <HeaderLeft>
-                <HeaderAvatar
-                    onClick={() => auth.signOut()}
-                    alt={user?.displayName}
-                    src={user?.photoURL}
-                />
-                <AccessTimeIcon />
-            </HeaderLeft>
-            <HeaderSearch>
-                <SearchIcon />
-                <input placeholder="Search" />
-            </HeaderSearch>
-            <HeaderRight>
-                <HelpOutlineIcon />
-            </HeaderRight>
-        </HeaderContainer>
+        <>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Slack Clone</h2>
+                        <p id="transition-modal-description">
+                            A Scoial Network App (Replica of Slack) built with Reactjs 🚀
+                            <br />
+                            <strong>Guide</strong>
+                            <br />
+                            There are different chat rooms organized by topic <br />
+                            Click the desired channel to enter the Chat <br />
+                            If you want to create another channel than just click on <br />
+                            + Add Channel button, and Create your own room <br />
+                            <strong>Tech Stack</strong>
+                            <ul>
+                                <li>React js</li>
+                                <li>Redux</li>
+                                <li>Firebase Firestore DB</li>
+                                <li>Material UI</li>
+                                <li>React Router</li>
+                                <li>Google Authentication</li>
+                            </ul>
+                            <span>Made with 🖤 by <a href="https://github.com/sharjeelyunus">Sharjeel Yunus</a></span>
+
+                        </p>
+                    </div>
+                </Fade>
+            </Modal>
+
+            <HeaderContainer>
+                <HeaderLeft>
+                    <HeaderAvatar
+                        onClick={() => auth.signOut()}
+                        alt={user?.displayName}
+                        src={user?.photoURL}
+                    />
+                    <AccessTimeIcon />
+                </HeaderLeft>
+                <HeaderSearch>
+                    <SearchIcon />
+                    <input placeholder="Search" />
+                </HeaderSearch>
+                <HeaderRight>
+                    <HelpOutlineIcon onClick={handleOpen} />
+                </HeaderRight>
+            </HeaderContainer>
+        </>
     )
 }
 
@@ -94,5 +165,6 @@ const HeaderRight = styled.div`
     > .MuiSvgIcon-root {
         margin-left: auto;
         margin-right: 20px;
+        cursor: pointer;
     }
 `;

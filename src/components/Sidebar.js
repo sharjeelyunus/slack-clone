@@ -25,14 +25,14 @@ function Sidebar() {
                 <CreateIcon />
             </SidebarHeader>
 
-            <SidebarOption Icon={InsertComment} title="Threads" />
+            {/* <SidebarOption Icon={InsertComment} title="Threads" />
             <SidebarOption Icon={Inbox} title="Mentions & reactions" />
             <SidebarOption Icon={BookmarkBorder} title="Channel browser" />
             <SidebarOption Icon={PeopleAlt} title="People and user groups" />
             <SidebarOption Icon={Apps} title="Apps" />
             <SidebarOption Icon={FileCopy} title="file browser" />
             <SidebarOption Icon={ExpandLess} title="Show less" />
-            <hr />
+            <hr /> */}
             <SidebarOption Icon={ExpandMore} title="Channels" />
             <hr />
             <SidebarOption Icon={Add} addChannelOption title="Add Channel" />

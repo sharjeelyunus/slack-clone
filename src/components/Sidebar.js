@@ -5,19 +5,21 @@ import CreateIcon from '@material-ui/icons/Create';
 import { BookmarkBorder, ExpandLess, PeopleAlt, InsertComment, FileCopy, Inbox, Apps, ExpandMore, Add } from '@material-ui/icons';
 import SidebarOption from './SidebarOption';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Sidebar() {
     const [channels] = useCollection(db.collection('rooms'));
+    const [user] = useAuthState(auth);
 
     return (
         <SidebarContainer>
             <SidebarHeader>
                 <SidebarInfo>
-                    <h2>FAM</h2>
+                    <h2>DevHub</h2>
                     <h3>
                         <FiberManualRecordIcon />
-                        Sharjeel Yunus
+                        {user.displayName}
                     </h3>
                 </SidebarInfo>
                 <CreateIcon />
@@ -52,6 +54,10 @@ const SidebarContainer = styled.div`
     border-top: 1px solid #49274b;
     max-width: 260px;
     margin-top: 60px;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 
     > hr {
         margin-top: 10px;
